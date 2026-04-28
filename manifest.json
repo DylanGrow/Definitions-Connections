@@ -1,0 +1,16 @@
+{
+  "name": "NetTerms",
+  "short_name": "NetTerms",
+  "start_url": "/Definitions-Connections/",
+  "scope": "/Definitions-Connections/",
+  "display": "standalone",
+  "background_color": "#03020e",
+  "theme_color": "#3b82f6",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    }
+  ]
+}
