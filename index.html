@@ -1,75 +1,480 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
-
-<link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
-
-<link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- ─── Security Headers (via meta) ──────────────────────────── -->
-  <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none';" />
-  <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-  <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()" />
-
-  <!-- ─── Identity (fill in before deploying) ──────────────────── -->
-  <title>APP NAME</title>
-  <meta name="description" content="APP DESCRIPTION" />
-  <meta name="author" content="YOUR NAME" />
-  <meta name="theme-color" content="#050505" />
-
-  <!-- ─── Open Graph ───────────────────────────────────────────── -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://YOUR-DOMAIN.com/" />
-  <meta property="og:title" content="APP NAME" />
-  <meta property="og:description" content="APP DESCRIPTION" />
-  <meta property="og:image" content="https://YOUR-DOMAIN.com/og-image.png" />
-
-  <!-- ─── Twitter Card ─────────────────────────────────────────── -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:url" content="https://YOUR-DOMAIN.com/" />
-  <meta name="twitter:title" content="APP NAME" />
-  <meta name="twitter:description" content="APP DESCRIPTION" />
-  <meta name="twitter:image" content="https://YOUR-DOMAIN.com/og-image.png" />
-
-  <!-- ─── PWA ──────────────────────────────────────────────────── -->
-  <link rel="manifest" href="manifest.json" />
-  <link rel="icon" href="favicon.ico" sizes="any" />
-  <link rel="icon" href="icon.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-
-  <!-- ─── Styles ───────────────────────────────────────────────── -->
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#3b82f6">
+    <meta name="description" content="Learn networking terminology through the Connections game. Master OSI layer concepts and network protocols.">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="./manifest.json">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%233b82f6' width='192' height='192'/><circle cx='96' cy='96' r='8' fill='%23fff'/><circle cx='60' cy='60' r='5' fill='%23a78bfa' opacity='0.8'/><circle cx='132' cy='60' r='5' fill='%2306b6d4' opacity='0.8'/><circle cx='60' cy='132' r='5' fill='%2310b981' opacity='0.8'/><circle cx='132' cy='132' r='5' fill='%23f59e0b' opacity='0.8'/></svg>">
+    
+    <!-- iOS PWA Support -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="NetTerms">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%233b82f6' width='192' height='192'/><circle cx='96' cy='96' r='8' fill='%23fff'/><circle cx='60' cy='60' r='5' fill='%23a78bfa' opacity='0.8'/><circle cx='132' cy='60' r='5' fill='%2306b6d4' opacity='0.8'/><circle cx='60' cy='132' r='5' fill='%2310b981' opacity='0.8'/><circle cx='132' cy='132' r='5' fill='%23f59e0b' opacity='0.8'/></svg>">
+    
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        slate: {
+                            950: '#03020e',
+                            900: '#0f172a',
+                            800: '#1e293b',
+                            700: '#334155',
+                        },
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <title>Network Terminology Connections</title>
+    <style>
+        /* Prevent FOUC (Flash of Unstyled Content) */
+        html {
+            background: #03020e;
+            color: #f1f5f9;
+        }
+        
+        body {
+            background: #03020e;
+        }
+    </style>
 </head>
 <body>
+    <!-- React Root Element -->
+    <div id="root"></div>
 
-  <!-- ─── App Shell ────────────────────────────────────────────── -->
-  <div id="app">
-    <header id="app-header">
-      <h1 id="app-title">APP NAME</h1>
-    </header>
+    <!-- React & React DOM from CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-    <main id="app-main">
-      <!-- Your content goes here -->
-    </main>
+    <!-- Main App Script (inline the React component) -->
+    <script type="module">
+        // Import React components from CDN
+        const React = window.React;
+        const ReactDOM = window.ReactDOM;
+        const { useState, useEffect, useCallback } = React;
+        const { RotateCcw, Lightbulb, Send } = window.lucide;
 
-    <footer id="app-footer">
-      <p>Built with care &mdash; <span id="footer-year"></span></p>
-    </footer>
-  </div>
+        // ============================================================================
+        // NETWORKING TERMS DATABASE - JSON STRUCTURE
+        // ============================================================================
+        const NETWORKING_TERMS = [
+            // Layer 1: Physical Layer (transmission of raw bits)
+            { id: 'hub', term: 'Hub', osiLayer: 1, category: 'Layer 1: Physical', difficulty: 1 },
+            { id: 'repeater', term: 'Repeater', osiLayer: 1, category: 'Layer 1: Physical', difficulty: 1 },
+            { id: 'ethernet', term: 'Ethernet', osiLayer: 1, category: 'Layer 1: Physical', difficulty: 1 },
+            { id: 'cable', term: 'Cable', osiLayer: 1, category: 'Layer 1: Physical', difficulty: 1 },
 
-  <!-- ─── Scripts ──────────────────────────────────────────────── -->
-  <script src="app.js" defer></script>
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js')
-        .catch(err => console.warn('SW registration failed:', err));
-    }
-  </script>
+            // Layer 2: Data Link Layer (MAC, frames)
+            { id: 'switch', term: 'Switch', osiLayer: 2, category: 'Layer 2: Data Link', difficulty: 1 },
+            { id: 'mac', term: 'MAC Address', osiLayer: 2, category: 'Layer 2: Data Link', difficulty: 1 },
+            { id: 'frame', term: 'Frame', osiLayer: 2, category: 'Layer 2: Data Link', difficulty: 1 },
+            { id: 'arp', term: 'ARP', osiLayer: 2, category: 'Layer 2: Data Link', difficulty: 2 },
 
+            // Layer 3: Network Layer (routing, IP)
+            { id: 'router', term: 'Router', osiLayer: 3, category: 'Layer 3: Network', difficulty: 1 },
+            { id: 'ip', term: 'IP Address', osiLayer: 3, category: 'Layer 3: Network', difficulty: 1 },
+            { id: 'icmp', term: 'ICMP', osiLayer: 3, category: 'Layer 3: Network', difficulty: 2 },
+            { id: 'bgp', term: 'BGP', osiLayer: 3, category: 'Layer 3: Network', difficulty: 3 },
+
+            // Layer 4: Transport Layer (TCP, UDP)
+            { id: 'tcp', term: 'TCP', osiLayer: 4, category: 'Layer 4: Transport', difficulty: 1 },
+            { id: 'udp', term: 'UDP', osiLayer: 4, category: 'Layer 4: Transport', difficulty: 1 },
+            { id: 'port', term: 'Port', osiLayer: 4, category: 'Layer 4: Transport', difficulty: 1 },
+            { id: 'sctp', term: 'SCTP', osiLayer: 4, category: 'Layer 4: Transport', difficulty: 3 },
+
+            // Layer 5-7: Upper Layers
+            { id: 'dns', term: 'DNS', osiLayer: 7, category: 'Layer 7: Application', difficulty: 1 },
+            { id: 'http', term: 'HTTP', osiLayer: 7, category: 'Layer 7: Application', difficulty: 1 },
+            { id: 'https', term: 'HTTPS', osiLayer: 7, category: 'Layer 7: Application', difficulty: 1 },
+            { id: 'smtp', term: 'SMTP', osiLayer: 7, category: 'Layer 7: Application', difficulty: 2 },
+            { id: 'tls', term: 'TLS/SSL', osiLayer: 6, category: 'Layer 6: Presentation', difficulty: 2 },
+            { id: 'session', term: 'Session', osiLayer: 5, category: 'Layer 5: Session', difficulty: 2 },
+            { id: 'gateway', term: 'Gateway', osiLayer: 5, category: 'Layer 5: Session', difficulty: 2 },
+            { id: 'proxy', term: 'Proxy', osiLayer: 7, category: 'Layer 7: Application', difficulty: 2 },
+        ];
+
+        // Color mapping for OSI layers
+        const LAYER_COLORS = {
+            1: { bg: 'bg-purple-600', accent: 'bg-purple-500', border: 'border-purple-400', light: 'bg-purple-100', text: 'text-purple-900' },
+            2: { bg: 'bg-cyan-600', accent: 'bg-cyan-500', border: 'border-cyan-400', light: 'bg-cyan-100', text: 'text-cyan-900' },
+            3: { bg: 'bg-emerald-600', accent: 'bg-emerald-500', border: 'border-emerald-400', light: 'bg-emerald-100', text: 'text-emerald-900' },
+            4: { bg: 'bg-amber-600', accent: 'bg-amber-500', border: 'border-amber-400', light: 'bg-amber-100', text: 'text-amber-900' },
+            5: { bg: 'bg-pink-600', accent: 'bg-pink-500', border: 'border-pink-400', light: 'bg-pink-100', text: 'text-pink-900' },
+            6: { bg: 'bg-indigo-600', accent: 'bg-indigo-500', border: 'border-indigo-400', light: 'bg-indigo-100', text: 'text-indigo-900' },
+            7: { bg: 'bg-blue-600', accent: 'bg-blue-500', border: 'border-blue-400', light: 'bg-blue-100', text: 'text-blue-900' },
+        };
+
+        // ============================================================================
+        // UTILITY FUNCTIONS
+        // ============================================================================
+
+        // Fisher-Yates shuffle algorithm
+        const shuffleArray = (array) => {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        };
+
+        // Generate a new game: select 4 random categories, then 4 terms per category
+        const generateNewGame = () => {
+            const layerGroups = {};
+            NETWORKING_TERMS.forEach(term => {
+                if (!layerGroups[term.osiLayer]) {
+                    layerGroups[term.osiLayer] = [];
+                }
+                layerGroups[term.osiLayer].push(term);
+            });
+
+            const layers = Object.keys(layerGroups).map(Number);
+            const selectedLayers = shuffleArray(layers).slice(0, 4);
+
+            const categories = selectedLayers.map(layer => {
+                const termsInLayer = layerGroups[layer];
+                return shuffleArray(termsInLayer).slice(0, 4).map(t => ({ ...t, categoryId: `layer-${layer}` }));
+            });
+
+            const allTerms = categories.flat();
+            return {
+                terms: shuffleArray(allTerms),
+                categories: categories.map((cats, idx) => ({
+                    id: `layer-${selectedLayers[idx]}`,
+                    layer: selectedLayers[idx],
+                    name: `Layer ${selectedLayers[idx]}: ${categories[idx][0].category.split(': ')[1]}`,
+                    terms: cats.map(t => t.id),
+                    color: LAYER_COLORS[selectedLayers[idx]],
+                })),
+            };
+        };
+
+        // ============================================================================
+        // MAIN APP COMPONENT
+        // ============================================================================
+
+        function App() {
+            const [gameState, setGameState] = useState(() => {
+                const gameData = generateNewGame();
+                return {
+                    ...gameData,
+                    selected: [],
+                    solved: [],
+                    mistakes: 4,
+                    gameOver: false,
+                    won: false,
+                    hintsUsed: 0,
+                    shake: false,
+                    message: '',
+                };
+            });
+
+            // Register service worker for PWA
+            useEffect(() => {
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.register('./service-worker.js').catch(() => {
+                        // Service worker registration failed - app still works
+                    });
+                }
+            }, []);
+
+            // Load streak from localStorage
+            const [streak, setStreak] = useState(() => {
+                return parseInt(localStorage.getItem('connectionStreak') || '0');
+            });
+
+            // Handle term selection
+            const toggleSelect = useCallback((termId) => {
+                if (gameState.gameOver || gameState.won) return;
+
+                setGameState(prev => {
+                    const isSelected = prev.selected.includes(termId);
+                    const newSelected = isSelected
+                        ? prev.selected.filter(id => id !== termId)
+                        : prev.selected.length < 4
+                        ? [...prev.selected, termId]
+                        : prev.selected;
+
+                    return { ...prev, selected: newSelected, shake: false, message: '' };
+                });
+            }, [gameState.gameOver, gameState.won]);
+
+            // Handle game submission
+            const submitGuess = useCallback(() => {
+                if (gameState.selected.length !== 4) return;
+
+                setGameState(prev => {
+                    const selectedTerms = prev.selected;
+                    
+                    const matchedCategory = prev.categories.find(cat =>
+                        cat.terms.every(t => selectedTerms.includes(t)) &&
+                        selectedTerms.every(t => cat.terms.includes(t))
+                    );
+
+                    if (matchedCategory) {
+                        const newSolved = [...prev.solved, matchedCategory.id];
+                        const isWon = newSolved.length === prev.categories.length;
+
+                        if (isWon) {
+                            const newStreak = streak + 1;
+                            setStreak(newStreak);
+                            localStorage.setItem('connectionStreak', newStreak);
+                        }
+
+                        return {
+                            ...prev,
+                            solved: newSolved,
+                            selected: [],
+                            won: isWon,
+                            message: isWon ? '🎉 Perfect! You won!' : '✅ Correct!',
+                            shake: false,
+                        };
+                    }
+
+                    const oneAwayMatch = prev.categories.find(cat => {
+                        const matches = selectedTerms.filter(t => cat.terms.includes(t)).length;
+                        return matches === 3;
+                    });
+
+                    if (oneAwayMatch) {
+                        return {
+                            ...prev,
+                            selected: [],
+                            message: '⚠️ One away!',
+                            shake: true,
+                        };
+                    }
+
+                    const newMistakes = prev.mistakes - 1;
+                    const isGameOver = newMistakes <= 0;
+
+                    if (isGameOver) {
+                        setStreak(0);
+                        localStorage.setItem('connectionStreak', '0');
+                    }
+
+                    return {
+                        ...prev,
+                        selected: [],
+                        mistakes: newMistakes,
+                        gameOver: isGameOver,
+                        message: isGameOver ? '💔 Game Over!' : '❌ Wrong guess',
+                        shake: true,
+                    };
+                });
+            }, [streak]);
+
+            // Shuffle remaining terms
+            const shuffleTerms = useCallback(() => {
+                setGameState(prev => ({
+                    ...prev,
+                    terms: shuffleArray(prev.terms.filter(t => !prev.solved.some(s => 
+                        prev.categories.find(c => c.id === s)?.terms.includes(t.id)
+                    ))),
+                }));
+            }, []);
+
+            // Use hint
+            const useHint = useCallback(() => {
+                if (gameState.hintsUsed >= 3 || gameState.gameOver || gameState.won) return;
+
+                setGameState(prev => ({
+                    ...prev,
+                    hintsUsed: prev.hintsUsed + 1,
+                    message: `💡 Category ${prev.hintsUsed + 1}: ${prev.categories[prev.hintsUsed]?.name}`,
+                }));
+            }, [gameState.hintsUsed, gameState.gameOver, gameState.won]);
+
+            // New game
+            const newGame = useCallback(() => {
+                const gameData = generateNewGame();
+                setGameState({
+                    ...gameData,
+                    selected: [],
+                    solved: [],
+                    mistakes: 4,
+                    gameOver: false,
+                    won: false,
+                    hintsUsed: 0,
+                    shake: false,
+                    message: '',
+                });
+            }, []);
+
+            // Get unsolved terms
+            const unsolvedTerms = gameState.terms.filter(t => 
+                !gameState.solved.some(s => 
+                    gameState.categories.find(c => c.id === s)?.terms.includes(t.id)
+                )
+            );
+
+            return React.createElement('div', { className: 'min-h-screen bg-slate-950 text-slate-100 p-4 font-sans', style: { fontFamily: 'Inter, system-ui, sans-serif' } },
+                React.createElement('style', null, `
+                    @keyframes shake {
+                        0%, 100% { transform: translateX(0); }
+                        25% { transform: translateX(-10px); }
+                        75% { transform: translateX(10px); }
+                    }
+                    .shake {
+                        animation: shake 0.5s cubic-bezier(0.36, 0, 0.66, -0.56);
+                    }
+                    @keyframes slideIn {
+                        from { opacity: 0; transform: translateY(20px); }
+                        to { opacity: 1; transform: translateY(0); }
+                    }
+                    .slide-in {
+                        animation: slideIn 0.3s ease-out;
+                    }
+                    @keyframes pulse-glow {
+                        0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+                        50% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.8); }
+                    }
+                    .glow {
+                        animation: pulse-glow 1.5s ease-in-out infinite;
+                    }
+                `),
+                
+                // Header
+                React.createElement('header', { className: 'max-w-2xl mx-auto mb-8' },
+                    React.createElement('h1', { className: 'text-4xl font-bold text-center mb-2 slide-in' }, '🌐 Network Terms'),
+                    React.createElement('p', { className: 'text-center text-slate-400 text-sm mb-4' }, 'Learn networking by OSI Layer'),
+                    React.createElement('div', { className: 'flex justify-between items-center bg-slate-900 rounded-lg p-4 border border-slate-800' },
+                        React.createElement('div', { className: 'text-center' },
+                            React.createElement('div', { className: 'text-xs text-slate-500 uppercase tracking-wide' }, 'Streak'),
+                            React.createElement('div', { className: 'text-2xl font-bold text-blue-400' }, streak)
+                        ),
+                        React.createElement('div', { className: 'text-center' },
+                            React.createElement('div', { className: 'text-xs text-slate-500 uppercase tracking-wide' }, 'Mistakes'),
+                            React.createElement('div', { className: `text-2xl font-bold ${gameState.mistakes === 0 ? 'text-red-400' : gameState.mistakes <= 2 ? 'text-amber-400' : 'text-slate-200'}` }, gameState.mistakes)
+                        ),
+                        React.createElement('div', { className: 'text-center' },
+                            React.createElement('div', { className: 'text-xs text-slate-500 uppercase tracking-wide' }, 'Solved'),
+                            React.createElement('div', { className: 'text-2xl font-bold text-emerald-400' }, `${gameState.solved.length}/4`)
+                        )
+                    )
+                ),
+
+                // Main Content
+                React.createElement('main', { className: 'max-w-2xl mx-auto' },
+                    // Message
+                    gameState.message && React.createElement('div', { className: `text-center mb-4 p-3 rounded-lg font-semibold slide-in ${
+                        gameState.message.includes('✅') || gameState.message.includes('🎉')
+                            ? 'bg-emerald-900 text-emerald-200'
+                            : gameState.message.includes('⚠️')
+                            ? 'bg-amber-900 text-amber-200'
+                            : 'bg-red-900 text-red-200'
+                    }` }, gameState.message),
+
+                    // Grid
+                    React.createElement('div', { className: `grid grid-cols-4 gap-2 mb-6 ${gameState.shake ? 'shake' : ''}` },
+                        unsolvedTerms.map(term => {
+                            const isSelected = gameState.selected.includes(term.id);
+                            const category = gameState.categories.find(c => c.terms.includes(term.id));
+                            const colors = category?.color || LAYER_COLORS[1];
+
+                            return React.createElement('button', {
+                                key: term.id,
+                                onClick: () => toggleSelect(term.id),
+                                disabled: gameState.gameOver && !gameState.won,
+                                className: `
+                                    p-3 rounded-lg font-semibold text-sm transition-all duration-200
+                                    transform hover:scale-105 active:scale-95 disabled:cursor-not-allowed
+                                    border-2 aspect-square flex items-center justify-center text-center
+                                    ${isSelected
+                                        ? `${colors.bg} border-slate-100 text-white glow shadow-lg`
+                                        : `bg-slate-800 border-slate-700 hover:border-slate-600 hover:bg-slate-700`
+                                    }
+                                `,
+                            },
+                                React.createElement('span', { className: 'line-clamp-3 text-xs md:text-sm' }, term.term)
+                            );
+                        })
+                    ),
+
+                    // Solved Categories
+                    gameState.solved.length > 0 && React.createElement('div', { className: 'space-y-2 mb-6' },
+                        gameState.solved.map(categoryId => {
+                            const category = gameState.categories.find(c => c.id === categoryId);
+                            return React.createElement('div', {
+                                key: categoryId,
+                                className: `${category.color.light} ${category.color.text} p-4 rounded-lg font-semibold text-center slide-in`
+                            }, category.name);
+                        })
+                    ),
+
+                    // Controls
+                    React.createElement('div', { className: 'space-y-3' },
+                        React.createElement('div', { className: 'grid grid-cols-2 gap-2' },
+                            React.createElement('button', {
+                                onClick: submitGuess,
+                                disabled: gameState.selected.length !== 4 || gameState.gameOver || gameState.won,
+                                className: 'bg-blue-600 hover:bg-blue-500 disabled:bg-slate-700 disabled:cursor-not-allowed px-4 py-3 rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors'
+                            }, 'Submit'),
+                            React.createElement('button', {
+                                onClick: shuffleTerms,
+                                disabled: gameState.gameOver || gameState.won,
+                                className: 'bg-slate-700 hover:bg-slate-600 disabled:bg-slate-800 disabled:cursor-not-allowed px-4 py-3 rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors'
+                            }, 'Shuffle')
+                        ),
+                        React.createElement('div', { className: 'grid grid-cols-2 gap-2' },
+                            React.createElement('button', {
+                                onClick: useHint,
+                                disabled: gameState.hintsUsed >= 3 || gameState.gameOver || gameState.won,
+                                className: 'bg-slate-700 hover:bg-slate-600 disabled:bg-slate-800 disabled:cursor-not-allowed px-4 py-3 rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors text-sm'
+                            }, `Hint (${3 - gameState.hintsUsed})`),
+                            React.createElement('button', {
+                                onClick: newGame,
+                                className: 'bg-emerald-600 hover:bg-emerald-500 px-4 py-3 rounded-lg font-semibold transition-colors'
+                            }, 'New Game')
+                        )
+                    ),
+
+                    // Game Over / Win State
+                    (gameState.gameOver || gameState.won) && React.createElement('div', { className: 'mt-8 p-6 bg-slate-900 rounded-lg border-2 border-slate-700 text-center slide-in' },
+                        React.createElement('p', { className: 'text-xl font-bold mb-2' }, gameState.won ? '🎉 You Won!' : '💔 Game Over'),
+                        React.createElement('p', { className: 'text-slate-400 mb-4' }, gameState.won ? `Great job! Your streak is now ${streak}.` : 'Better luck next time. Keep learning!'),
+                        React.createElement('button', {
+                            onClick: newGame,
+                            className: 'bg-blue-600 hover:bg-blue-500 px-6 py-2 rounded-lg font-semibold'
+                        }, 'Play Again')
+                    ),
+
+                    // Footer
+                    React.createElement('footer', { className: 'mt-12 text-center text-slate-500 text-xs space-y-2' },
+                        React.createElement('p', null, '📚 Learn networking by grouping related terms by OSI Layer'),
+                        React.createElement('p', null, '💾 Your streak is saved locally'),
+                        React.createElement('p', null, '📱 This PWA works offline after first load')
+                    )
+                )
+            );
+        }
+
+        // Render app
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(React.createElement(App));
+    </script>
 </body>
 </html>
