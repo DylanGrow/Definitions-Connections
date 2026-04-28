@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+
+<link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+
+<link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ─── Security Headers (via meta) ──────────────────────────── -->
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none';" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()" />
+
+  <!-- ─── Identity (fill in before deploying) ──────────────────── -->
+  <title>APP NAME</title>
+  <meta name="description" content="APP DESCRIPTION" />
+  <meta name="author" content="YOUR NAME" />
+  <meta name="theme-color" content="#050505" />
+
+  <!-- ─── Open Graph ───────────────────────────────────────────── -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://YOUR-DOMAIN.com/" />
+  <meta property="og:title" content="APP NAME" />
+  <meta property="og:description" content="APP DESCRIPTION" />
+  <meta property="og:image" content="https://YOUR-DOMAIN.com/og-image.png" />
+
+  <!-- ─── Twitter Card ─────────────────────────────────────────── -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://YOUR-DOMAIN.com/" />
+  <meta name="twitter:title" content="APP NAME" />
+  <meta name="twitter:description" content="APP DESCRIPTION" />
+  <meta name="twitter:image" content="https://YOUR-DOMAIN.com/og-image.png" />
+
+  <!-- ─── PWA ──────────────────────────────────────────────────── -->
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+  <!-- ─── Styles ───────────────────────────────────────────────── -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ─── App Shell ────────────────────────────────────────────── -->
+  <div id="app">
+    <header id="app-header">
+      <h1 id="app-title">APP NAME</h1>
+    </header>
+
+    <main id="app-main">
+      <!-- Your content goes here -->
+    </main>
+
+    <footer id="app-footer">
+      <p>Built with care &mdash; <span id="footer-year"></span></p>
+    </footer>
+  </div>
+
+  <!-- ─── Scripts ──────────────────────────────────────────────── -->
+  <script src="app.js" defer></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js')
+        .catch(err => console.warn('SW registration failed:', err));
+    }
+  </script>
+
+</body>
+</html>

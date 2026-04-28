@@ -1,0 +1,21 @@
+/* TEAM */
+Developer: YOUR NAME
+Location: YOUR CITY, YOUR STATE
+GitHub: https://github.com/YOUR-USERNAME
+
+/* SITE */
+Last update: 2026
+Language: English
+Doctype: HTML5
+IDE: YOUR EDITOR
+
+/* STANDARDS */
+Built to: HTML5, CSS3, ES2022
+Security: Mozilla Observatory target A+
+Performance: Lighthouse target 100
+Accessibility: WCAG 2.2 AA
+PWA: Installable, offline-first
+Dependencies: Zero
+
+/* THANKS */
+To everyone who reads source code before judging.
